@@ -4,6 +4,10 @@ import com.spring.backend.entity.Developer;
 import com.spring.backend.repository.DeveloperRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +23,11 @@ public class DeveloperService {
      * READ operation for Developer
      * @return
      */
-    public List<Developer> getAllDevelopers() {
+    public List<Developer> getAllDevelopers(Integer pageNumber, Integer pageSize) {
         try {
-            List<Developer> developers = developerRepo.findAll();
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+            Page<Developer> developersPage = developerRepo.findAll(pageable);
+            List<Developer> developers = developersPage.getContent();
             log.info("Developers List: {}", developers.toString());
             return developers;
         } catch (Exception e) {
@@ -91,9 +97,15 @@ public class DeveloperService {
      */
     public boolean deleteDeveloperById(Long id) {
         try {
-            developerRepo.deleteById(id);
-            log.info("Developer with ID: {} is successfully updated", id);
-            return true;
+            Optional<Developer> developer = developerRepo.findById(id);
+            if(developer.isPresent()) {
+                developerRepo.deleteById(id);
+                log.info("Developer with ID: {} is successfully deleted", id);
+                return true;
+            } else {
+                log.info("Developer with ID: {} does not exist", id);
+            }
+            return false;
         } catch (Exception e) {
             log.error("Exception occurred while deleting developer: {},{}", e.getMessage(), e);
         }
