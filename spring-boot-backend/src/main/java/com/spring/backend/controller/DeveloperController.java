@@ -22,6 +22,9 @@ public class DeveloperController {
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize
     ) {
         List<Developer> developers = developerService.getAllDevelopers(pageNumber, pageSize);
+        if(developers == null || developers.size() == 0) {
+            return developerService.getAllDevelopers(0, pageSize);
+        }
         return developers;
     }
 

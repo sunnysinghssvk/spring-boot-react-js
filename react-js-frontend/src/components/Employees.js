@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Container, Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Table, Button, ButtonGroup } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
 import BASE_URL from "../service/restapi";
 import axios from "axios";
@@ -40,7 +40,7 @@ const Employees = () => {
 
     return (
         <div>
-            <Table hover className="my-5">
+            <Table hover className="my-2">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -62,23 +62,19 @@ const Employees = () => {
                     ))}
                 </tbody>
             </Table>
-            <Container>
-                <Pagination>
-                    <PaginationItem>
-                        <PaginationLink onClick={() => {
-                            setPageNumber(pageNumber - 1);
-                            getAllEmployeesFromRestApi();
-                        }}>Previous</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink onClick={() => {
-                            setPageNumber(pageNumber + 1);
-                            getAllEmployeesFromRestApi();
-                        }}>Next</PaginationLink>
-                    </PaginationItem>
-                </Pagination>
-            </Container>
-            <ToastContainer />
+            <div className="my-4">
+                <ButtonGroup>
+                    <Button type="submit" onClick={() => {
+                        setPageNumber(pageNumber - 1);
+                        getAllEmployeesFromRestApi();
+                    }} color="secondary">Previous</Button>
+                    <Button type="reset" onClick={() => {
+                        setPageNumber(pageNumber + 1);
+                        getAllEmployeesFromRestApi();
+                    }} color="secondary">Next</Button>
+                </ButtonGroup>
+                <ToastContainer />
+            </div>
         </div>
     );
 };
