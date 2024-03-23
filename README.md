@@ -24,12 +24,10 @@ Frontend
 
 # How to Run
 Clone the repository to your local machine.
-Set up the backend
 1. Navigate to the backend directory.
-2. Configure the database settings in application.properties.
+2. Configure the database settings in application.yml.
 3. Run mvn spring-boot:run to start the Spring Boot backend server.
-Set up the frontend
-1. Navigate to the frontend directory.
-2. Install dependencies using npm install or yarn install.
-3. Start the frontend server with npm start or yarn start.
-4. Access the application in your web browser at http://localhost:3000.
+4. Navigate to the frontend directory.
+5. Install dependencies using npm install or yarn install.
+6. Start the frontend server with npm start or yarn start.
+7. Access the application in your web browser at http://localhost:3000.
